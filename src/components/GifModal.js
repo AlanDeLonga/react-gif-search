@@ -14,7 +14,7 @@ const GifModal = (props) => {
       isOpen={ props.modalIsOpen }
       onRequestClose={ () => props.onRequestClose() }
       contentLabel="Gif Modal">
-      <div>
+      <div className="gif-modal">
         <img src={ props.selectedGif.images.original.url } alt="" />
         <p><strong>Source:</strong> <a href={ props.selectedGif.source }>{ props.selectedGif.source }</a></p>
         <p><strong>Rating:</strong> { props.selectedGif.rating }</p>
