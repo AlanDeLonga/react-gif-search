@@ -2,6 +2,8 @@ import React from 'react';
 import Modal from 'react-modal';
 
 // https://github.com/reactjs/react-modal
+// https://github.com/reactjs/react-modal/issues/366
+// https://github.com/reactjs/react-modal/issues/367
 const GifModal = (props) => {
   if (!props.selectedGif) {
     return <div></div>;
@@ -10,7 +12,8 @@ const GifModal = (props) => {
   return (
     <Modal
       isOpen={ props.modalIsOpen }
-      onRequestClose={ () => props.onRequestClose() }>
+      onRequestClose={ () => props.onRequestClose() }
+      contentLabel="Gif Modal">
       <div>
         <img src={ props.selectedGif.images.original.url } alt="" />
         <p><strong>Source:</strong> <a href={ props.selectedGif.source }>{ props.selectedGif.source }</a></p>
