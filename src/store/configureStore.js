@@ -7,7 +7,7 @@ export default function configureStore(initialState) {
     rootReducer,
     initialState,
     compose (
-      applyMiddleware(ReduxPromise),
+      applyMiddleware(ReduxPromise), // allows for asynchronous returns within actions
       window.devToolsExtension ? window.devToolsExtension() : f => f,
     ),
   );
