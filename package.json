@@ -5,6 +5,7 @@
   "dependencies": {
     "react": "^15.5.3",
     "react-dom": "^15.5.3",
+    "react-modal": "^1.7.3",
     "superagent": "^3.5.2"
   },
   "devDependencies": {
