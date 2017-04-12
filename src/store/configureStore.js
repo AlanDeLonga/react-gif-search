@@ -1,5 +1,5 @@
 import { createStore, compose, applyMiddleware } from 'redux';
-import ReduxPromise from 'redux-promise';
+import reduxThunk from 'redux-thunk';
 import rootReducer from '../reducers';
 
 export default function configureStore(initialState) {
@@ -7,7 +7,7 @@ export default function configureStore(initialState) {
     rootReducer,
     initialState,
     compose (
-      applyMiddleware(ReduxPromise), // allows for asynchronous returns within actions
+      applyMiddleware(reduxThunk), // allows for asynchronous returns within actions
       window.devToolsExtension ? window.devToolsExtension() : f => f,
     ),
   );
