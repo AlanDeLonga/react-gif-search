@@ -6,9 +6,9 @@ class Header extends Component {
   render() {
     return (
       <nav className="navebar navbar-default">
-        <div classname="container-fluid">
+        <div className="container-fluid">
           <div className="navbar-header">
-            <Link className="navbar-brand" to="/">React2Gifs</Link>
+            <Link className="navbar-brand" to="/">Gif2U</Link>
           </div>
           <ul className="nav navbar-nav navbar-right">
             <li className="nav-item">
