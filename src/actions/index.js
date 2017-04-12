@@ -1,4 +1,5 @@
 import request from 'superagent';
+import { browserHistory } from 'react-router';
 
 export const REQUEST_GIFS = 'REQUEST_GIFS';
 export const OPEN_MODAL = 'OPEN_MODAL';
@@ -33,12 +34,14 @@ export function closeModal() {
 }
 
 export function signInUser() {
+  browserHistory.push('/favorites');
   return {
     type: SIGN_IN_USER,
   }
 }
 
 export function signOutUser() {
+  browserHistory.push('/');
   return {
     type: SIGN_OUT_USER,
   }
