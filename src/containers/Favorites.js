@@ -1,4 +1,4 @@
-import { Component } from 'react';
+import React, { Component } from 'react';
 
 class Favoirtes extends Component {
   render() {
@@ -6,4 +6,4 @@ class Favoirtes extends Component {
   }
 }
 
-export defalt Favoirtes;
+export default Favoirtes;

@@ -1,4 +1,4 @@
-import { Component } from 'react';
+import React, { Component } from 'react';
 
 class Login extends Component {
   render() {
@@ -6,4 +6,4 @@ class Login extends Component {
   }
 }
 
-export defalt Login;
+export default Login;
