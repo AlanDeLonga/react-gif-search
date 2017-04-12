@@ -1,15 +1,28 @@
 import request from 'superagent';
 import { browserHistory } from 'react-router';
+import Firebase from 'firebase';
 
 export const REQUEST_GIFS = 'REQUEST_GIFS';
 export const OPEN_MODAL = 'OPEN_MODAL';
 export const CLOSE_MODAL = 'CLOSE_MODAL';
 export const SIGN_IN_USER = 'SIGN_IN_USER';
 export const SIGN_OUT_USER = 'SIGN_OUT_USER';
+export const AUTH_USER = 'AUTH_USER';
+export const AUTH_ERROR = 'AUTH_ERROR';
 
 
 const API_URL = 'http://api.giphy.com/v1/gifs/search?q=';
 const API_KEY = '&api_key=dc6zaTOxFJmzC';
+
+const config = {
+  apiKey: 'AIzaSyCHcHWYbsNjnlz-UPrjhNuzuWruZfM6W8k',
+  authDomain: 'gif2u-3b5e6.firebaseapp.com',
+  databaseURL: 'https://gif2u-3b5e6.firebaseio.com',
+  projectId: 'gif2u-3b5e6',
+  storageBucket: 'gif2u-3b5e6.appspot.com',
+  messagingSenderId: '996826218504'
+};
+
 
 export function requestGifs(term = null) {
   return function(dispatch) {
@@ -35,10 +48,28 @@ export function closeModal() {
   }
 }
 
+export function signUpUser() {
+  return function(dispatch) {
+    Firebase.auth().createUserWithEmailAndPassword(credentials.email, credentials.password)
+      .then(response => {
+        dispatch(authUser());
+        browserHistory.push('/favorites');
+      }).catch(error => {
+        console.log(error);
+        dispatch(authError(error));
+      });
+  }
+}
+
 export function signInUser() {
-  browserHistory.push('/favorites');
-  return {
-    type: SIGN_IN_USER,
+  return function(dispatch) {
+    Firebase.auth().signInWithEmailAndPassword(credentials.email, credentials.password)
+      .then(response => {
+        dispatch(authUser());
+        browserHistory.push('/favorites');
+      }).catch(error => {
+        dispatch(authError(error));
+      });
   }
 }
 
@@ -46,5 +77,20 @@ export function signOutUser() {
   browserHistory.push('/');
   return {
     type: SIGN_OUT_USER,
+  }
+}
+
+export function authUser() {
+  browserHistory.push('/');
+  return {
+    type: AUTH_USER,
+  }
+}
+
+export function authError() {
+  browserHistory.push('/');
+  return {
+    type: AUTH_ERROR,
+    payload: error,
   }
 }
