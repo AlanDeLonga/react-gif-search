@@ -1,6 +1,7 @@
 import { createStore, compose, applyMiddleware } from 'redux';
 import reduxThunk from 'redux-thunk';
 import rootReducer from '../reducers';
+import * as Actions from '../actions';
 
 export default function configureStore(initialState) {
   const store = createStore(
@@ -19,6 +20,10 @@ export default function configureStore(initialState) {
       store.replaceReducer(nextRootReducer);
     });
   }
+
+  // uses saction creator to check if user has valid login creds in session storage
+  // if they do they can are directed to the favorites page else to sign up
+  store.dispatch(Actions.verifyAuth());
 
   return store;
 }

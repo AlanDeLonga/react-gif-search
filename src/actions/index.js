@@ -75,6 +75,7 @@ export function signInUser(credentials) {
 }
 
 export function signOutUser() {
+  Firebase.auth().signOut();
   browserHistory.push('/');
   return {
     type: SIGN_OUT_USER,
@@ -91,5 +92,17 @@ export function authError(error) {
   return {
     type: AUTH_ERROR,
     payload: error,
+  }
+}
+
+export function verifyAuth() {
+  return function (dispatch) {
+    Firebase.auth().onAuthStateChanged(user => {
+      if (user) {
+        dispatch(authUser());
+      } else {
+        dispatch(signOutUser());
+      }
+    });
   }
 }
