@@ -6,6 +6,7 @@ export const REQUEST_GIFS = 'REQUEST_GIFS';
 export const OPEN_MODAL = 'OPEN_MODAL';
 export const CLOSE_MODAL = 'CLOSE_MODAL';
 export const SIGN_IN_USER = 'SIGN_IN_USER';
+export const FETCH_FAVORITED_GIFS = 'FETCH_FAVORITED_GIFS';
 export const SIGN_OUT_USER = 'SIGN_OUT_USER';
 export const AUTH_USER = 'AUTH_USER';
 export const AUTH_ERROR = 'AUTH_ERROR';
@@ -34,6 +35,35 @@ export function requestGifs(term = null) {
       });
     });
   }
+}
+
+export function fetchFavoritedGifs() {
+  const userUid = Firebase.auth().currentUser.uid;
+  
+  return function(dispatch) {
+    Firebase.database().ref(userUid).on('value', snapshot => {
+      dispatch({
+        type: FETCH_FAVORITED_GIFS,
+        payload: snapshot.val(),
+      })
+    });
+  }
+}
+
+export function favoriteGif({selectedGif}) {
+  const userUid = Firebase.auth().currentUser.uid;
+  const gifId = selectedGif.id;
+
+  return dispatch => Firebase.database().ref(userUid).update({
+    [gifId]: selectedGif
+  });
+}
+
+export function unfavoriteGif({selectedGif}) {
+  const userUid = Firebase.auth().currentUser.uid;
+  const gifId = selectedGif.id;
+
+  return dispatch => Firebase.database().ref(userUid).child(gifId).remove();
 }
 
 export function openModal(gif) {
