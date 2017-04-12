@@ -23,6 +23,7 @@ const config = {
   messagingSenderId: '996826218504'
 };
 
+Firebase.initializeApp(config);
 
 export function requestGifs(term = null) {
   return function(dispatch) {
@@ -48,7 +49,7 @@ export function closeModal() {
   }
 }
 
-export function signUpUser() {
+export function signUpUser(credentials) {
   return function(dispatch) {
     Firebase.auth().createUserWithEmailAndPassword(credentials.email, credentials.password)
       .then(response => {
@@ -61,7 +62,7 @@ export function signUpUser() {
   }
 }
 
-export function signInUser() {
+export function signInUser(credentials) {
   return function(dispatch) {
     Firebase.auth().signInWithEmailAndPassword(credentials.email, credentials.password)
       .then(response => {
@@ -81,14 +82,12 @@ export function signOutUser() {
 }
 
 export function authUser() {
-  browserHistory.push('/');
   return {
     type: AUTH_USER,
   }
 }
 
-export function authError() {
-  browserHistory.push('/');
+export function authError(error) {
   return {
     type: AUTH_ERROR,
     payload: error,
