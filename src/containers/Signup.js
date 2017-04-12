@@ -31,11 +31,11 @@ class Signup extends Component {
   };
 
   renderField = ({ input, label, type, meta: { touched, error } }) => (
-    <fieldset className="form-group">
-      <label>{label}</label>
+    <fieldset className={`form-group ${touched && error ? 'has-error' : ''}`}>
+      <label className="control-label">{label}</label>
       <div>
         <input {...input} placeholder={label} className="form-control" type={type} />
-        {touched && error && <span>{error}</span>}
+        {touched && error && <div className="help-block">{error}</div>}
       </div>
     </fieldset>
   );
