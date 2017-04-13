@@ -38,15 +38,38 @@ export function requestGifs(term = null) {
 }
 
 export function fetchFavoritedGifs() {
-  const userUid = Firebase.auth().currentUser.uid;
-  
   return function(dispatch) {
-    Firebase.database().ref(userUid).on('value', snapshot => {
-      dispatch({
-        type: FETCH_FAVORITED_GIFS,
-        payload: snapshot.val(),
-      })
-    });
+    if (Firebase.auth().currentUser){
+      const userUid = Firebase.auth().currentUser.uid;
+      console.log(userUid);
+
+      Firebase.database().ref(userUid).on('value', snapshot => {
+        dispatch({
+          type: FETCH_FAVORITED_GIFS,
+          payload: snapshot.val(),
+        })
+      });
+    } else { // if Firebase.auth().currentUser is not set try to find the userUid in localStorage
+      let userKey = null;
+      for(let key in localStorage) {
+        if(key.startsWith("firebase:authUser:")){
+          userKey = key;
+        }
+      }
+      if (userKey) {
+        const userUid = localStorage.getItem(userKey).uid;
+
+        Firebase.database().ref(userUid).on('value', snapshot => {
+          const userGifs = snapshot.val();
+          const gifList = userGifs[Object.keys(userGifs)[0]];
+
+          dispatch({
+            type: FETCH_FAVORITED_GIFS,
+            payload: gifList,
+          })
+        });
+      }
+    }
   }
 }
 
